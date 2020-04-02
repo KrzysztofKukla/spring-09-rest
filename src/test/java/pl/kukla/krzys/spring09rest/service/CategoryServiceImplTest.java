@@ -48,7 +48,7 @@ class CategoryServiceImplTest {
         BDDMockito.when(categoryRepository.findById(ArgumentMatchers.anyLong())).thenReturn(Optional.of(category));
         BDDMockito.when(categoryMapper.categoryToCategoryDto(ArgumentMatchers.any(Category.class))).thenReturn(categoryDto);
 
-        CategoryDto categoryDtoResponse = categoryService.getOne(id);
+        CategoryDto categoryDtoResponse = categoryService.getById(id);
 
         Assertions.assertNotNull(categoryDtoResponse);
         Assertions.assertEquals(categoryDto, categoryDtoResponse);

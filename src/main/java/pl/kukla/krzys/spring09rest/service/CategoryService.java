@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface CategoryService {
 
-    CategoryDto getOne(Long id);
+    CategoryDto getById(Long id);
 
     CategoryDto getByName(String name);
 
