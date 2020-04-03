@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +29,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class CustomerController {
+    private static final String CUSTOMERS_URI = "/v1/customers";
+
     private final CustomerService customerService;
 
     @GetMapping
@@ -49,7 +52,17 @@ public class CustomerController {
 
         }
         Customer savedCustomer = customerService.createCustomer(customerDto);
-        UriComponents uriComponents = UriComponentsBuilder.fromUriString("/v1/customers/" + savedCustomer.getId()).build();
+        return buildAndReturnResponseEntity(savedCustomer);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable Long id, @Valid @RequestBody CustomerDto customerDto) {
+        Customer updatedCustomer = customerService.updateCustomer(id, customerDto);
+        return buildAndReturnResponseEntity(updatedCustomer);
+    }
+
+    private ResponseEntity<CustomerDto> buildAndReturnResponseEntity(Customer savedCustomer) {
+        UriComponents uriComponents = UriComponentsBuilder.fromUriString(CUSTOMERS_URI + "/" + savedCustomer.getId()).build();
         return ResponseEntity.created(uriComponents.toUri())
             .build();
     }

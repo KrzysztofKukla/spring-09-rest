@@ -33,8 +33,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDto findById(Long id) {
-        Customer customer = customerRepository.findById(id)
-            .orElseThrow(() -> new CustomerNotFoundException("Cannot find customer for id->" + id));
+        Customer customer = getCustomer(id);
         return customerMapper.customerToCustomerDto(customer);
     }
 
@@ -45,6 +44,20 @@ public class CustomerServiceImpl implements CustomerService {
         log.debug("Customer has been saved with id->{}", savedCustomer.getId());
         return savedCustomer;
 
+    }
+
+    @Override
+    public Customer updateCustomer(Long id, CustomerDto customerDto) {
+        Customer customer = customerMapper.customerDtoToCustomer(customerDto);
+        if (getCustomer(id) != null) {
+            customer.setId(getCustomer(id).getId());
+        }
+        return customerRepository.save(customer);
+    }
+
+    private Customer getCustomer(Long id) {
+        return customerRepository.findById(id)
+            .orElseThrow(() -> new CustomerNotFoundException("Cannot find customer for id->" + id));
     }
 
 }
