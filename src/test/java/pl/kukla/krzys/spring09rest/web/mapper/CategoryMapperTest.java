@@ -29,17 +29,15 @@ class CategoryMapperTest {
 
         CategoryDto categoryDto = categoryMapper.categoryToCategoryDto(category);
 
-        Assertions.assertEquals(ID, categoryDto.getId());
         Assertions.assertEquals(NAME, categoryDto.getName());
     }
 
     @Test
     void categoryDtoToCategory() throws Exception {
-        CategoryDto categoryDto = CategoryDto.builder().id(ID).name(NAME).build();
+        CategoryDto categoryDto = CategoryDto.builder().name(NAME).build();
 
         Category category = categoryMapper.categoryDtoToCategory(categoryDto);
 
-        Assertions.assertEquals(ID, category.getId());
         Assertions.assertEquals(NAME, category.getName());
     }
 

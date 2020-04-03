@@ -43,7 +43,7 @@ class CategoryServiceImplTest {
     @Test
     void getOne() {
         Category category = Category.builder().id(id).name(name).build();
-        CategoryDto categoryDto = CategoryDto.builder().id(id).name(name).build();
+        CategoryDto categoryDto = CategoryDto.builder().name(name).build();
 
         BDDMockito.when(categoryRepository.findById(ArgumentMatchers.anyLong())).thenReturn(Optional.of(category));
         BDDMockito.when(categoryMapper.categoryToCategoryDto(ArgumentMatchers.any(Category.class))).thenReturn(categoryDto);

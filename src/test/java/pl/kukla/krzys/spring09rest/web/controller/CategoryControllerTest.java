@@ -45,12 +45,12 @@ class CategoryControllerTest {
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(categoryController).build();
-        validCategory = CategoryDto.builder().id(1L).name("first").build();
+        validCategory = CategoryDto.builder().name("first").build();
     }
 
     @Test
     void getAll() throws Exception {
-        CategoryDto cat2 = CategoryDto.builder().id(2L).name("second").build();
+        CategoryDto cat2 = CategoryDto.builder().name("second").build();
 
         BDDMockito.when(categoryService.getAll()).thenReturn(Arrays.asList(validCategory, cat2));
 

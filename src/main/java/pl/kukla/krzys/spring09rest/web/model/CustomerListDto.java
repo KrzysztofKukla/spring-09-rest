@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * @author Krzysztof Kukla
  */
@@ -12,8 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CategoryDto {
-
-    private String name;
+public class CustomerListDto {
+    private List<CustomerDto> customers;
 
 }

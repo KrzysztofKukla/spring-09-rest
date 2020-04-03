@@ -12,8 +12,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CategoryDto {
+public class CustomerDto {
 
-    private String name;
+    private String firstName;
+    private String lastName;
+    private String customerUrl;
 
 }
