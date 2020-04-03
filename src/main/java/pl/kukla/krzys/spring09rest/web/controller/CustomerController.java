@@ -3,14 +3,21 @@ package pl.kukla.krzys.spring09rest.web.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+import pl.kukla.krzys.spring09rest.domain.Customer;
 import pl.kukla.krzys.spring09rest.service.CustomerService;
 import pl.kukla.krzys.spring09rest.web.model.CustomerDto;
 import pl.kukla.krzys.spring09rest.web.model.CustomerListDto;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -34,6 +41,17 @@ public class CustomerController {
     public ResponseEntity<CustomerDto> findById(@PathVariable Long id) {
         CustomerDto customer = customerService.findById(id);
         return ResponseEntity.ok(customer);
+    }
+
+    @PostMapping()
+    public ResponseEntity<CustomerDto> addCustomer(@Valid @RequestBody CustomerDto customerDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+
+        }
+        Customer savedCustomer = customerService.createCustomer(customerDto);
+        UriComponents uriComponents = UriComponentsBuilder.fromUriString("/v1/customers/" + savedCustomer.getId()).build();
+        return ResponseEntity.created(uriComponents.toUri())
+            .build();
     }
 
 }
