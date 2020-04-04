@@ -7,7 +7,7 @@ import pl.kukla.krzys.spring09rest.web.model.CustomerDto;
 /**
  * @author Krzysztof Kukla
  */
-@Mapper
+@Mapper(componentModel = "spring")
 public interface CustomerMapper {
     Customer customerDtoToCustomer(CustomerDto customerDto);
 
