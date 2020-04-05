@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import pl.kukla.krzys.spring09rest.domain.Customer;
+import pl.kukla.krzys.spring09rest.exception.RestResponseEntityControllerAdvice;
 import pl.kukla.krzys.spring09rest.service.CustomerService;
 import pl.kukla.krzys.spring09rest.web.model.CustomerDto;
 
@@ -35,7 +36,9 @@ class CustomerControllerTest {
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(customerController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(customerController)
+            .setControllerAdvice(RestResponseEntityControllerAdvice.class
+            ).build();
     }
 
     @Test

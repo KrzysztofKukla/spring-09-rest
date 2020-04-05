@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import pl.kukla.krzys.spring09rest.exception.CategoryNotFoundException;
+import pl.kukla.krzys.spring09rest.exception.RestResponseEntityControllerAdvice;
 import pl.kukla.krzys.spring09rest.service.CategoryService;
 import pl.kukla.krzys.spring09rest.web.model.CategoryDto;
 
@@ -42,7 +43,9 @@ class CategoryControllerTest {
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(categoryController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(categoryController)
+            .setControllerAdvice(RestResponseEntityControllerAdvice.class)
+            .build();
         validCategory = CategoryDto.builder().name("first").build();
     }
 
