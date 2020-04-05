@@ -2,10 +2,11 @@ package pl.kukla.krzys.spring09rest.web.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import pl.kukla.krzys.spring09rest.service.CategoryService;
 import pl.kukla.krzys.spring09rest.web.model.CategoryDto;
@@ -27,22 +28,22 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<CategoryListDto> getAll() {
+    @ResponseStatus(HttpStatus.OK)
+    public CategoryListDto getAll() {
         List<CategoryDto> categories = categoryService.getAll();
-        CategoryListDto categoryListDto = CategoryListDto.builder().categories(categories).build();
-        return ResponseEntity.ok(categoryListDto);
+        return CategoryListDto.builder().categories(categories).build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryDto> getCategoryById(@PathVariable Long id) {
-        CategoryDto categoryDto = categoryService.getById(id);
-        return ResponseEntity.ok(categoryDto);
+    @ResponseStatus(HttpStatus.OK)
+    public CategoryDto getCategoryById(@PathVariable Long id) {
+        return categoryService.getById(id);
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<CategoryDto> getByName(@PathVariable String name) {
-        CategoryDto categoryDto = categoryService.getByName(name);
-        return ResponseEntity.ok(categoryDto);
+    @ResponseStatus(HttpStatus.OK)
+    public CategoryDto getByName(@PathVariable String name) {
+        return categoryService.getByName(name);
     }
 
 }

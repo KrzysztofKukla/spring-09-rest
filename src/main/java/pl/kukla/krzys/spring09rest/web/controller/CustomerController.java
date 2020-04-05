@@ -2,6 +2,7 @@ package pl.kukla.krzys.spring09rest.web.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -35,16 +37,16 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @GetMapping
-    public ResponseEntity<CustomerListDto> getAll() {
+    @ResponseStatus(HttpStatus.OK)
+    public CustomerListDto getAll() {
         List<CustomerDto> customers = customerService.findAll();
-        CustomerListDto customerList = CustomerListDto.builder().customers(customers).build();
-        return ResponseEntity.ok(customerList);
+        return CustomerListDto.builder().customers(customers).build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CustomerDto> findById(@PathVariable Long id) {
-        CustomerDto customer = customerService.findById(id);
-        return ResponseEntity.ok(customer);
+    @ResponseStatus(HttpStatus.OK)
+    public CustomerDto findById(@PathVariable Long id) {
+        return customerService.findById(id);
     }
 
     @PostMapping()
@@ -63,9 +65,9 @@ public class CustomerController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCustomer(@PathVariable Long id) {
         customerService.deleteCustomer(id);
-        return ResponseEntity.noContent().build();
     }
 
     private ResponseEntity<CustomerDto> buildAndReturnResponseEntity(Customer savedCustomer) {
