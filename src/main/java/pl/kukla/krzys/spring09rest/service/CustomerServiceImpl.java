@@ -49,10 +49,14 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer updateCustomer(Long id, CustomerDto customerDto) {
         Customer customer = customerMapper.customerDtoToCustomer(customerDto);
-        if (getCustomer(id) != null) {
-            customer.setId(getCustomer(id).getId());
-        }
+        Long customerId = getCustomer(id).getId();
+        customer.setId(customerId);
         return customerRepository.save(customer);
+    }
+
+    @Override
+    public void deleteCustomer(Long id) {
+        customerRepository.deleteById(id);
     }
 
     private Customer getCustomer(Long id) {

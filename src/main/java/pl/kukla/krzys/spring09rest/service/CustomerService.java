@@ -18,4 +18,6 @@ public interface CustomerService {
 
     Customer updateCustomer(Long id, CustomerDto customerDto);
 
+    void deleteCustomer(Long id);
+
 }

@@ -76,4 +76,17 @@ class CustomerServiceImplIT {
         );
     }
 
+    @Test
+    void deleteCustomer() throws Exception {
+        Assumptions.assumeTrue(customerRepository.count() == 0);
+        Customer customerToSave = Customer.builder().firstName("Chris").lastName("kukla").build();
+        CustomerDto customerPreparedToUpdate = CustomerDto.builder().firstName("first created").lastName("last created").build();
+
+        Customer savedCustomer = customerRepository.save(customerToSave);
+        Assumptions.assumeTrue(customerRepository.count() == 1);
+
+        customerService.deleteCustomer(savedCustomer.getId());
+        assertEquals(0, customerRepository.count());
+    }
+
 }

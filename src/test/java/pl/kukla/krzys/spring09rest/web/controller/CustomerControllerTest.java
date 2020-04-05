@@ -11,19 +11,21 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import pl.kukla.krzys.spring09rest.domain.Customer;
 import pl.kukla.krzys.spring09rest.service.CustomerService;
 import pl.kukla.krzys.spring09rest.web.model.CustomerDto;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * @author Krzysztof Kukla
  */
 @ExtendWith(MockitoExtension.class)
 class CustomerControllerTest {
+
+    private static final String CUSTOMER_ROOT = "/v1/customers";
 
     @Mock
     private CustomerService customerService;
@@ -49,13 +51,19 @@ class CustomerControllerTest {
 
         String customerContent = new ObjectMapper().writeValueAsString(customerDto);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/v1/customers")
+        mockMvc.perform(MockMvcRequestBuilders.post(CUSTOMER_ROOT)
             .content(customerContent)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
-            .andExpect(MockMvcResultMatchers.status().isCreated());
+            .andExpect(status().isCreated());
 
         BDDMockito.then(customerService).should().createCustomer(any(CustomerDto.class));
+    }
+
+    @Test
+    void deleteCustomer() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete(CUSTOMER_ROOT + "/{id}", 1))
+            .andExpect(status().isNoContent());
     }
 
 }
