@@ -17,10 +17,13 @@ import java.util.List;
  * @author Krzysztof Kukla
  */
 @RestController
-@RequestMapping("/v1/categories")
+@RequestMapping(CategoryController.BASE_URL)
 @RequiredArgsConstructor
 @Slf4j
 public class CategoryController {
+
+    static final String BASE_URL = "/v1/categories";
+
     private final CategoryService categoryService;
 
     @GetMapping

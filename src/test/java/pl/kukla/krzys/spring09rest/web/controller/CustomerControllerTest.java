@@ -25,8 +25,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 class CustomerControllerTest {
 
-    private static final String CUSTOMER_ROOT = "/v1/customers";
-
     @Mock
     private CustomerService customerService;
 
@@ -51,7 +49,7 @@ class CustomerControllerTest {
 
         String customerContent = new ObjectMapper().writeValueAsString(customerDto);
 
-        mockMvc.perform(MockMvcRequestBuilders.post(CUSTOMER_ROOT)
+        mockMvc.perform(MockMvcRequestBuilders.post(CustomerController.BASE_URL)
             .content(customerContent)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
@@ -62,7 +60,7 @@ class CustomerControllerTest {
 
     @Test
     void deleteCustomer() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete(CUSTOMER_ROOT + "/{id}", 1))
+        mockMvc.perform(MockMvcRequestBuilders.delete(CustomerController.BASE_URL + "/{id}", 1))
             .andExpect(status().isNoContent());
     }
 

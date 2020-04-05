@@ -26,11 +26,11 @@ import java.util.List;
  * @author Krzysztof Kukla
  */
 @RestController
-@RequestMapping("/v1/customers")
+@RequestMapping(CustomerController.BASE_URL)
 @RequiredArgsConstructor
 @Slf4j
 public class CustomerController {
-    private static final String CUSTOMERS_URI = "/v1/customers";
+    static final String BASE_URL = "/v1/customers";
 
     private final CustomerService customerService;
 
@@ -69,7 +69,7 @@ public class CustomerController {
     }
 
     private ResponseEntity<CustomerDto> buildAndReturnResponseEntity(Customer savedCustomer) {
-        UriComponents uriComponents = UriComponentsBuilder.fromUriString(CUSTOMERS_URI + "/" + savedCustomer.getId()).build();
+        UriComponents uriComponents = UriComponentsBuilder.fromUriString(BASE_URL + "/" + savedCustomer.getId()).build();
         return ResponseEntity.created(uriComponents.toUri())
             .build();
     }

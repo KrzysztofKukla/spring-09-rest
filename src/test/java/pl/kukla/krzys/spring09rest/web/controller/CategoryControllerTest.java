@@ -30,8 +30,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(MockitoExtension.class)
 class CategoryControllerTest {
 
-    private static final String ROOT_CATEGORY_URL = "/v1/categories";
-
     @Mock
     private CategoryService categoryService;
 
@@ -54,7 +52,7 @@ class CategoryControllerTest {
 
         BDDMockito.when(categoryService.getAll()).thenReturn(Arrays.asList(validCategory, cat2));
 
-        mockMvc.perform(MockMvcRequestBuilders.get(ROOT_CATEGORY_URL)
+        mockMvc.perform(MockMvcRequestBuilders.get(CategoryController.BASE_URL)
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(MockMvcResultMatchers.jsonPath("$.categories", Matchers.hasSize(2)));
@@ -66,7 +64,7 @@ class CategoryControllerTest {
     void getByIdExist() throws Exception {
         BDDMockito.when(categoryService.getById(anyLong())).thenReturn(validCategory);
 
-        mockMvc.perform(MockMvcRequestBuilders.get(ROOT_CATEGORY_URL + "/{id}", 1)
+        mockMvc.perform(MockMvcRequestBuilders.get(CategoryController.BASE_URL + "/{id}", 1)
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.name", Matchers.equalTo(validCategory.getName())));
@@ -78,7 +76,7 @@ class CategoryControllerTest {
     void getByIdNotExist() throws Exception {
         BDDMockito.when(categoryService.getById(anyLong())).thenThrow(CategoryNotFoundException.class);
 
-        mockMvc.perform(MockMvcRequestBuilders.get(ROOT_CATEGORY_URL + "/{id}", 1)
+        mockMvc.perform(MockMvcRequestBuilders.get(CategoryController.BASE_URL + "/{id}", 1)
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound());
 
@@ -89,7 +87,7 @@ class CategoryControllerTest {
     void getByNameExist() throws Exception {
         BDDMockito.when(categoryService.getByName(anyString())).thenReturn(validCategory);
 
-        mockMvc.perform(MockMvcRequestBuilders.get(ROOT_CATEGORY_URL + "/name/{name}", "some name")
+        mockMvc.perform(MockMvcRequestBuilders.get(CategoryController.BASE_URL + "/name/{name}", "some name")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.name", Matchers.equalTo(validCategory.getName())));
