@@ -1,6 +1,5 @@
 package pl.kukla.krzys.spring09rest.service;
 
-import pl.kukla.krzys.spring09rest.domain.Customer;
 import pl.kukla.krzys.spring09rest.web.model.CustomerDto;
 
 import java.util.List;
@@ -14,9 +13,9 @@ public interface CustomerService {
 
     CustomerDto findById(Long id);
 
-    Customer createCustomer(CustomerDto customerDto);
+    CustomerDto createCustomer(CustomerDto customerDto);
 
-    Customer updateCustomer(Long id, CustomerDto customerDto);
+    CustomerDto updateCustomer(Long id, CustomerDto customerDto);
 
     void deleteCustomer(Long id);
 

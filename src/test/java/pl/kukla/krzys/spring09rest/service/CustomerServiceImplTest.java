@@ -42,9 +42,8 @@ class CustomerServiceImplTest {
         BDDMockito.when(customerMapper.customerDtoToCustomer(any(CustomerDto.class))).thenReturn(customer);
         BDDMockito.when(customerRepository.save(any(Customer.class))).thenReturn(customer);
 
-        Customer savedCustomer = customerService.createCustomer(customerDto);
+        CustomerDto savedCustomer = customerService.createCustomer(customerDto);
 
-        Assertions.assertEquals(customer, savedCustomer);
         Assertions.assertEquals(customer.getLastName(), savedCustomer.getLastName());
         BDDMockito.then(customerMapper).should().customerDtoToCustomer(any(CustomerDto.class));
         BDDMockito.then(customerRepository).should().save(any(Customer.class));
@@ -63,9 +62,8 @@ class CustomerServiceImplTest {
         BDDMockito.when(customerMapper.customerDtoToCustomer(any(CustomerDto.class))).thenReturn(updatedCustomer);
         BDDMockito.when(customerRepository.save(any(Customer.class))).thenReturn(updatedCustomer);
 
-        Customer updatedCustomerResponse = customerService.updateCustomer(id, customerDto);
+        CustomerDto updatedCustomerResponse = customerService.updateCustomer(id, customerDto);
 
-        Assertions.assertEquals(updatedCustomer, updatedCustomerResponse);
         Assertions.assertEquals(updatedCustomer.getLastName(), updatedCustomerResponse.getLastName());
         BDDMockito.then(customerRepository).should().findById(anyLong());
         BDDMockito.then(customerMapper).should().customerDtoToCustomer(any(CustomerDto.class));

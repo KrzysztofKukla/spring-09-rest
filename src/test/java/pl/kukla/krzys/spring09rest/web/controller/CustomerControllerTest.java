@@ -12,7 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import pl.kukla.krzys.spring09rest.domain.Customer;
 import pl.kukla.krzys.spring09rest.exception.RestResponseEntityControllerAdvice;
 import pl.kukla.krzys.spring09rest.service.CustomerService;
 import pl.kukla.krzys.spring09rest.web.model.CustomerDto;
@@ -46,9 +45,8 @@ class CustomerControllerTest {
         String firstName = "first";
         String lastName = "last";
         CustomerDto customerDto = CustomerDto.builder().firstName(firstName).lastName(lastName).build();
-        Customer savedCustomer = Customer.builder().firstName(firstName).lastName(lastName).build();
 
-        BDDMockito.when(customerService.createCustomer(customerDto)).thenReturn(savedCustomer);
+        BDDMockito.when(customerService.createCustomer(customerDto)).thenReturn(customerDto);
 
         String customerContent = new ObjectMapper().writeValueAsString(customerDto);
 

@@ -49,19 +49,21 @@ public class CustomerController {
         return customerService.findById(id);
     }
 
-    @PostMapping()
-    public ResponseEntity<CustomerDto> addCustomer(@Valid @RequestBody CustomerDto customerDto, BindingResult bindingResult) {
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public CustomerDto addCustomer(@Valid @RequestBody CustomerDto customerDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
 
         }
-        Customer savedCustomer = customerService.createCustomer(customerDto);
-        return buildAndReturnResponseEntity(savedCustomer);
+        return customerService.createCustomer(customerDto);
+//        return buildAndReturnResponseEntity(savedCustomer);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable Long id, @Valid @RequestBody CustomerDto customerDto) {
-        Customer updatedCustomer = customerService.updateCustomer(id, customerDto);
-        return buildAndReturnResponseEntity(updatedCustomer);
+    @ResponseStatus(HttpStatus.CREATED)
+    public CustomerDto updateCustomer(@PathVariable Long id, @Valid @RequestBody CustomerDto customerDto) {
+        return customerService.updateCustomer(id, customerDto);
+//        return buildAndReturnResponseEntity(updatedCustomer);
     }
 
     @DeleteMapping("/{id}")

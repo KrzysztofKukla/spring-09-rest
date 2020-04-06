@@ -48,7 +48,7 @@ class CustomerServiceImplIT {
         Assumptions.assumeTrue(customerRepository.count() == 0);
         CustomerDto customerDto = CustomerDto.builder().firstName("first created").lastName("last created").build();
 
-        Customer savedCustomer = customerService.createCustomer(customerDto);
+        CustomerDto savedCustomer = customerService.createCustomer(customerDto);
 
         assertEquals(1, customerRepository.count());
         assertAll(
@@ -66,11 +66,10 @@ class CustomerServiceImplIT {
         Customer savedCustomer = customerRepository.save(customerToSave);
         Assumptions.assumeTrue(customerRepository.count() == 1);
 
-        Customer updatedCustomer = customerService.updateCustomer(savedCustomer.getId(), customerPreparedToUpdate);
+        CustomerDto updatedCustomer = customerService.updateCustomer(savedCustomer.getId(), customerPreparedToUpdate);
 
         assertEquals(1, customerRepository.count());
         assertAll(
-            () -> assertEquals(savedCustomer.getId(), updatedCustomer.getId()),
             () -> assertEquals(customerPreparedToUpdate.getFirstName(), updatedCustomer.getFirstName()),
             () -> assertEquals(customerPreparedToUpdate.getLastName(), updatedCustomer.getLastName())
         );
