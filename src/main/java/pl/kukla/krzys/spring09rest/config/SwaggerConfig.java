@@ -35,9 +35,10 @@ public class SwaggerConfig {  //extends WebMvcConfigurationSupport {
 //    Collection<VendorExtension> vendorExtensions) {
     @Bean
     public ApiInfo apiInfo() {
-        Contact contact = new Contact("name", "url", "email");
+        String url = "http://url.com";
+        Contact contact = new Contact("name", url, "blue19k@poczta.fm");
         return new ApiInfo(
-            "title", "desciption", "version", "termsOfServiceUrl", contact, "licence", "licenceUrl",
+            "title", "desciption", "version", url, contact, "licence", url,
             Collections.EMPTY_LIST
         );
     }
