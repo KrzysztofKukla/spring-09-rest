@@ -4,9 +4,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.Collections;
 
 /**
  * @author Krzysztof Kukla
@@ -22,7 +26,20 @@ public class SwaggerConfig {  //extends WebMvcConfigurationSupport {
             .apis(RequestHandlerSelectors.any())
             .paths(PathSelectors.any())
             .build()
-            .pathMapping("/");
+            .pathMapping("/")
+            .apiInfo(apiInfo());
+    }
+
+    //Metadata
+    //    public ApiInfo(String title, String description, String version, String termsOfServiceUrl, Contact contact, String license, String licenseUrl,
+//    Collection<VendorExtension> vendorExtensions) {
+    @Bean
+    public ApiInfo apiInfo() {
+        Contact contact = new Contact("name", "url", "email");
+        return new ApiInfo(
+            "title", "desciption", "version", "termsOfServiceUrl", contact, "licence", "licenceUrl",
+            Collections.EMPTY_LIST
+        );
     }
 
     //by default this is configured by Spring Boot automatically
