@@ -1,5 +1,7 @@
 package pl.kukla.krzys.spring09rest.web.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,7 @@ import java.util.List;
 /**
  * @author Krzysztof Kukla
  */
+@Api(description = "This is description for CustomerController in Swagger")
 @RestController
 @RequestMapping(CustomerController.BASE_URL)
 @RequiredArgsConstructor
@@ -36,6 +39,7 @@ public class CustomerController {
 
     private final CustomerService customerService;
 
+    @ApiOperation(value = "This method gets list of Customers in Swagger", notes = "Details information in Swagger")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public CustomerListDto getAll() {
