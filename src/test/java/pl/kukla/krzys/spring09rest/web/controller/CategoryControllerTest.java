@@ -56,6 +56,7 @@ class CategoryControllerTest {
         BDDMockito.when(categoryService.getAll()).thenReturn(Arrays.asList(validCategory, cat2));
 
         mockMvc.perform(MockMvcRequestBuilders.get(CategoryController.BASE_URL)
+            .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(MockMvcResultMatchers.jsonPath("$.categories", Matchers.hasSize(2)));
@@ -68,6 +69,7 @@ class CategoryControllerTest {
         BDDMockito.when(categoryService.getById(anyLong())).thenReturn(validCategory);
 
         mockMvc.perform(MockMvcRequestBuilders.get(CategoryController.BASE_URL + "/{id}", 1)
+            .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.name", Matchers.equalTo(validCategory.getName())));
@@ -91,6 +93,7 @@ class CategoryControllerTest {
         BDDMockito.when(categoryService.getByName(anyString())).thenReturn(validCategory);
 
         mockMvc.perform(MockMvcRequestBuilders.get(CategoryController.BASE_URL + "/name/{name}", "some name")
+            .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.name", Matchers.equalTo(validCategory.getName())));

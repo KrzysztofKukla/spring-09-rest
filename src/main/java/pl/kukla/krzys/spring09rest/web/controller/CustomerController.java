@@ -47,6 +47,7 @@ public class CustomerController {
         return CustomerListDto.builder().customers(customers).build();
     }
 
+    //Content-Type - on request that is going in
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public CustomerDto findById(@PathVariable Long id) {
